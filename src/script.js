@@ -50,6 +50,10 @@ mesh1.position.y = - objectsDistance * 0
 mesh2.position.y = - objectsDistance * 1
 mesh3.position.y = - objectsDistance * 2
 
+mesh1.position.x = 2
+mesh2.position.x = -2
+mesh3.position.x = 3
+
 scene.add(mesh1, mesh2, mesh3);
 
 const sectionMeshes = [mesh1, mesh2, mesh3]
@@ -108,12 +112,24 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 // renderer.setClearAlpha(0.5) // this way we control the alpha on the background
 
 /**
+ * Scroll
+ */
+let scrollY = window.scrollY
+window.addEventListener("scroll", () => {
+  scrollY = window.scrollY / sizes.height * objectsDistance
+  console.log(scrollY)
+})
+
+/**
  * Animate
  */
 const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+
+  // Animate camera
+  camera.position.y = - scrollY 
 
   // Animate meshes
   for(const mesh of sectionMeshes) {
