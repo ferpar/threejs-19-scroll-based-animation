@@ -4,15 +4,13 @@
     padding: 0;
 }
 
-html,
-body
-{
-    overflow: hidden;
+html {
+    background: #1e1a20;
 }
 
 .webgl
 {
-    position: fixed;
+    position: fixed; /*use absolute if you want to scroll past the canvas*/
     top: 0;
     left: 0;
     outline: none;
