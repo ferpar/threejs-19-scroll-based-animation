@@ -52,7 +52,7 @@ mesh3.position.y = - objectsDistance * 2
 
 mesh1.position.x = 2
 mesh2.position.x = -2
-mesh3.position.x = 3
+mesh3.position.x = 2
 
 scene.add(mesh1, mesh2, mesh3);
 
@@ -130,24 +130,28 @@ const cursor = { x: 0, y: 0 };
 
 window.addEventListener("mousemove", (event) => {
   cursor.x = event.clientX / sizes.width - 0.5;
-  cursor.y = -(event.clientY / sizes.height - 0.5); // invert the y axis 
+  cursor.y = event.clientY / sizes.height - 0.5; // invert the y axis 
 })
 
 /**
  * Animate
  */
 const clock = new THREE.Clock();
+let previousTime = 0;
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+  const deltaTime = elapsedTime - previousTime;
+  previousTime = elapsedTime
+  
 
   // Animate camera
   camera.position.y = - scrollY 
 
   const parallaxX = cursor.x
-  const parallaxY = cursor.y 
-  cameraGroup.position.x = parallaxX
-  cameraGroup.position.y = parallaxY
+  const parallaxY = - cursor.y 
+  cameraGroup.position.x = (parallaxX - cameraGroup.position.x) * 0.5 * Math.round(deltaTime * 100) // Math.round is to avoid shaking due to floating point
+  cameraGroup.position.y = (parallaxY - cameraGroup.position.y) * 0.5 * Math.round(deltaTime * 100)
 
   // Animate meshes
   for(const mesh of sectionMeshes) {
