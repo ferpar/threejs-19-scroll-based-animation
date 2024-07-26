@@ -147,13 +147,19 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 let scrollY = window.scrollY
 window.addEventListener("scroll", () => {
   scrollY = window.scrollY / sizes.height * objectsDistance
-  console.log(scrollY)
+ 
+  const newSection = Math.round(window.scrollY / sizes.height)
+  if (newSection != currentSection) {
+    currentSection = newSection
+    console.log('Section', currentSection)
+  }
 })
 
 /**
  * Cursor
  */
 const cursor = { x: 0, y: 0 };
+let currentSection = 0;
 
 window.addEventListener("mousemove", (event) => {
   cursor.x = event.clientX / sizes.width - 0.5;
